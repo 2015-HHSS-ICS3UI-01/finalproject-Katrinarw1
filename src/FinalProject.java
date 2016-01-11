@@ -1,6 +1,11 @@
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
@@ -10,7 +15,7 @@ import javax.swing.JFrame;
  */
 
 
-public class FinalProject extends JComponent{
+public class FinalProject extends JComponent implements KeyListener, MouseMotionListener, MouseListener{
 
     // Height and Width of our game
     static final int WIDTH = 800;
@@ -20,6 +25,16 @@ public class FinalProject extends JComponent{
     // you just need to select an approproate framerate
     long desiredFPS = 60;
     long desiredTime = (1000)/desiredFPS;
+    
+    // player position variables
+    int x = 100;
+    int y = 500;
+    
+    //mouse variables
+    int mouseX = 0;
+    int mouseY = 0;
+    boolean buttonPressed = false;
+    
     
 
     
@@ -32,7 +47,16 @@ public class FinalProject extends JComponent{
         // always clear the screen first!
         g.clearRect(0, 0, WIDTH, HEIGHT);
         
-        // GAME DRAWING GOES HERE 
+        // GAME DRAWING STARTS HERE 
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         
         // GAME DRAWING ENDS HERE
@@ -105,7 +129,53 @@ public class FinalProject extends JComponent{
         // shows the window to the user
         frame.setVisible(true);
         
+        //add the listeners
+        frame.addKeyListener(game); //keyboard
+        game.addMouseListener(game); // mouse
+        game.addMouseMotionListener(game); // mouse
+        
         // starts my game loop
         game.run();
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
     }
 }
