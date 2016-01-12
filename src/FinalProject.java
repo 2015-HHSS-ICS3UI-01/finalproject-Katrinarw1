@@ -1,6 +1,7 @@
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -18,7 +19,7 @@ import javax.swing.JFrame;
 public class FinalProject extends JComponent implements KeyListener, MouseMotionListener, MouseListener{
 
     // Height and Width of our game
-    static final int WIDTH = 800;
+    static final int WIDTH = 900;
     static final int HEIGHT = 600;
     
     // sets the framerate and delay for our game
@@ -35,7 +36,16 @@ public class FinalProject extends JComponent implements KeyListener, MouseMotion
     int mouseY = 0;
     boolean buttonPressed = false;
     
+    //keyboard variables
+    boolean up = false;
+    boolean down = false;
+    boolean right = false;
+    boolean left = false;
+    boolean jump = false;
     
+    Rectangle player = new Rectangle(100, 500,50,50);
+    int moveX = 0;
+    int moveY = 0;
 
     
     // drawing of the game happens in here
@@ -140,15 +150,32 @@ public class FinalProject extends JComponent implements KeyListener, MouseMotion
 
     @Override
     public void keyTyped(KeyEvent e) {
-        
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
+        //when the arrow keys & space bar are pressed
+        int key = e.getKeyCode();
+        if(key == KeyEvent.VK_LEFT){
+            left = true;
+        }else if(key == KeyEvent.VK_RIGHT){
+            right = true;
+        }else if(key == KeyEvent.VK_SPACE){
+            jump = true;
+        }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
+        //when the arrow keys & space bar are released
+        int key = e.getKeyCode();
+        if(key == KeyEvent.VK_LEFT){
+            left = false;
+        }else if(key == KeyEvent.VK_RIGHT){
+            right = false;
+        }else if(key == KeyEvent.VK_SPACE){
+            jump = false;
+        }
     }
 
     @Override
