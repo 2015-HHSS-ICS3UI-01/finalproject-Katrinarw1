@@ -1,4 +1,5 @@
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Rectangle;
@@ -7,6 +8,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
@@ -27,23 +29,33 @@ public class FinalProject extends JComponent implements KeyListener, MouseMotion
     long desiredFPS = 60;
     long desiredTime = (1000)/desiredFPS;
     
+    //create temp player
+    Rectangle player = new Rectangle(100,200,50,50);
+    
     // player position variables
     int x = 100;
-    int y = 500;
+    int y = 100;
     
-    //mouse variables
-    int mouseX = 0;
-    int mouseY = 0;
-    boolean buttonPressed = false;
+    //platforms
+    ArrayList<Rectangle> platforms = new ArrayList<>();
+    
+    //platform width 
+    int width = 75;
+    //platform random height between 100 and 300
+    int height = 1;
+    
+    //create gravity for jumping
+    int gravity = 1;
+    
+    //move
+    int xmove = 0;
     
     //keyboard variables
-    boolean up = false;
-    boolean down = false;
     boolean right = false;
     boolean left = false;
     boolean jump = false;
     
-    Rectangle player = new Rectangle(100, 500,50,50);
+    //move variables
     int moveX = 0;
     int moveY = 0;
 
@@ -58,16 +70,18 @@ public class FinalProject extends JComponent implements KeyListener, MouseMotion
         g.clearRect(0, 0, WIDTH, HEIGHT);
         
         // GAME DRAWING STARTS HERE 
+        Color greyish = new Color(149, 190, 204);
+        g.setColor(greyish);
+        //g.drawImage(Image img, 0, 0, WIDTH, HEIGHT, ImageObserver observer);
         
+        //platforms
+        g.setColor(Color.BLACK);
+        //array of blocks
+        //MATH.random for heights?
         
-        
-        
-        
-        
-        
-        
-        
-        
+        //player
+        g.setColor(Color.RED);
+        g.fillRect(player.x, player.y, player.width, player.height);
         
         // GAME DRAWING ENDS HERE
     }
@@ -77,6 +91,9 @@ public class FinalProject extends JComponent implements KeyListener, MouseMotion
     // In here is where all the logic for my game will go
     public void run()
     {
+        //INITIAL THINGS TO DO 
+        platforms.add(new Rectangle());
+        
         // Used to keep track of time used to draw and update the game
         // This is used to limit the framerate later on
         long startTime;
@@ -93,6 +110,13 @@ public class FinalProject extends JComponent implements KeyListener, MouseMotion
             // all your game rules and move is done in here
             // GAME LOGIC STARTS HERE 
             
+            if(right){
+                xmove = 1;
+            } else if(left){
+                xmove = -1;
+            }else {
+                xmove = 0;
+            }
             
 
             // GAME LOGIC ENDS HERE 
@@ -156,25 +180,26 @@ public class FinalProject extends JComponent implements KeyListener, MouseMotion
     public void keyPressed(KeyEvent e) {
         //when the arrow keys & space bar are pressed
         int key = e.getKeyCode();
-        if(key == KeyEvent.VK_LEFT){
+        if(key == KeyEvent.VK_SPACE){
+            jump = true;
+        }else if(key == KeyEvent.VK_LEFT){
             left = true;
         }else if(key == KeyEvent.VK_RIGHT){
             right = true;
-        }else if(key == KeyEvent.VK_SPACE){
-            jump = true;
         }
+        
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
         //when the arrow keys & space bar are released
         int key = e.getKeyCode();
-        if(key == KeyEvent.VK_LEFT){
+        if(key == KeyEvent.VK_SPACE){
+            jump = false;
+        }else if(key == KeyEvent.VK_LEFT){
             left = false;
         }else if(key == KeyEvent.VK_RIGHT){
             right = false;
-        }else if(key == KeyEvent.VK_SPACE){
-            jump = false;
         }
     }
 
