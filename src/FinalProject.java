@@ -23,7 +23,7 @@ import javax.imageio.ImageIO;
 public class FinalProject extends JComponent implements KeyListener, MouseMotionListener, MouseListener{
 
     // Height and Width of our game
-    static final int WIDTH = 1350;
+    static final int WIDTH = 1150;
     static final int HEIGHT = 700;
     
     // sets the framerate and delay for our game
@@ -35,7 +35,7 @@ public class FinalProject extends JComponent implements KeyListener, MouseMotion
     Rectangle player;
     
     // player position variables
-    int x = 100;
+    int x = 150;
     int y = 100;
    
     //platforms
@@ -43,20 +43,17 @@ public class FinalProject extends JComponent implements KeyListener, MouseMotion
    
     //platform width
     int w = 75;
-    //platform random height between 100 and 300
-    int h = 1;
    
     //create gravity for jumping
     int gravity = 1;
     int frameCount = 0;
    
-    //move
-    int xmove = 0;
-   
     //keyboard variables
     boolean right = false;
     boolean left = false;
     boolean jump = false;
+    boolean prevJump = false;
+    boolean inAir = false;
    
     //move variables
     int moveX = 0;
@@ -97,12 +94,17 @@ public class FinalProject extends JComponent implements KeyListener, MouseMotion
         g.drawImage(background, 0, 0, WIDTH, HEIGHT, null);
        
         //player
+        g.fillRect(x,y,50,50);
         g.drawImage(standing, player.x, player.y, player.width, player.height, null);
         
         //platforms
         g.setColor(Color.BLACK);
-        //array of blocks
-        //MATH.random for heights?
+        // go through each block
+        for(Rectangle block: platforms){
+            // draw the block
+            g.fillRect(block.x, block.y, block.width, block.height);
+        }
+        
 
         
         // GAME DRAWING ENDS HERE
@@ -113,6 +115,15 @@ public class FinalProject extends JComponent implements KeyListener, MouseMotion
     // In here is where all the logic for my game will go
     public void run()
     {
+        
+        //INITIAL THINGS TO DO
+        //add the platforms to the array
+        platforms.add(new Rectangle(150,400,200,200));
+        platforms.add(new Rectangle(400,500,100,200));
+        platforms.add(new Rectangle(600,350,100,75));
+        platforms.add(new Rectangle(700,500,100,150));
+        platforms.add(new Rectangle(900,550,100,75));
+        
         // Used to keep track of time used to draw and update the game
         // This is used to limit the framerate later on
         long startTime;
@@ -130,14 +141,36 @@ public class FinalProject extends JComponent implements KeyListener, MouseMotion
             // GAME LOGIC STARTS HERE 
             //move the player
              if(right){
-                xmove = 1;
+                moveX = 1;
             } else if(left){
-                xmove = -1;
+                moveX = -1;
             }else {
-                xmove = 0;
+                moveX = 0;
+            }
+             frameCount++;
+             
+             //gravity
+             if(frameCount >= 1){
+                // gravity pulling player down
+                moveY = moveY + gravity;
+                frameCount = 0;
+            }
+             
+             //jumping
+            // jump being pressed and not in the air
+            if(jump && !prevJump && !inAir){
+                // make a big change in y direction
+                moveY = -20;
+                inAir = true;
             }
             
-
+            // move the player
+            /*player.x = player.x + moveX;
+            player.y = player.y + moveY;*/
+            
+            
+             
+             
             // GAME LOGIC ENDS HERE 
             
             // update the drawing (calls paintComponent)
