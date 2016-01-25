@@ -338,6 +338,10 @@ public class FinalGame2 extends JComponent implements KeyListener, MouseMotionLi
                 }
             }
             
+            if(energy > 210){
+                energy = 210;
+            }
+            
             // If no energy game over
             if(energy == 0){
                 buttonPressed = 2;
@@ -355,6 +359,7 @@ public class FinalGame2 extends JComponent implements KeyListener, MouseMotionLi
             
             // GAME LOGIC ENDS HERE 
             // update the drawing (calls paintComponent)
+            
             repaint();
 
             // SLOWS DOWN THE GAME BASED ON THE FRAMERATE ABOVE
@@ -367,31 +372,6 @@ public class FinalGame2 extends JComponent implements KeyListener, MouseMotionLi
                     Thread.sleep(desiredTime - deltaTime);
                 } catch (Exception e) {
                 };
-            }
-        }
-    }
-    
-    
-    public class Brick {
-
-        static final int time = 5;
-        int x, y;
-
-        public Brick(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-
-        public void drawBricks(Graphics g) {
-            g.setColor(Color.RED);
-            g.fillRect(x, y, 40, 20);
-        }
-
-        public void moveBricks() {
-            if (y == windowHeight) {
-                y = 0;
-            } else {
-                y += time;
             }
         }
     }
