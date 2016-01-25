@@ -40,15 +40,16 @@ public class FinalGame2 extends JComponent implements KeyListener, MouseMotionLi
     int width = 40;
     int height = 40;
     
-    //if the player is hit with a brick
+    // if the player is hit with a brick
     boolean crushed = false;
     
+    // create the bricks array
     ArrayList<Rectangle> bricks = new ArrayList<>();
     
-    // why cant I use <Circle>????
+    // create the coins array
     ArrayList<Rectangle> coins = new ArrayList<>(); 
     
-    //coffee
+    // create the coffee array
     ArrayList<Rectangle> coffees = new ArrayList<>();
     
     // keyboard variables
@@ -56,6 +57,8 @@ public class FinalGame2 extends JComponent implements KeyListener, MouseMotionLi
     boolean left = false;
     boolean jump = false;
     boolean prevJump = false;
+    
+    // for energy bar
     double energy = 210;
     boolean playerMoving = false;
     
@@ -64,13 +67,6 @@ public class FinalGame2 extends JComponent implements KeyListener, MouseMotionLi
     
     //coins collected
     int score = 0;
-    
-    int delay = 50;
-    
-    Timer timer = null;
-    
-    
-    int coinY = 0;
     
     // player
      Rectangle player = new Rectangle(500, 200, 40, 40);
