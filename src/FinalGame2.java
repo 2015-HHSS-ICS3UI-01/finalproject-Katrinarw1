@@ -1,3 +1,4 @@
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -14,7 +15,6 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.Timer;
 
 /**
  *
@@ -39,40 +39,40 @@ public class FinalGame2 extends JComponent implements KeyListener, MouseMotionLi
     boolean inAir = false;
     int width = 40;
     int height = 40;
-    
+
     // if the player is hit with a brick
     boolean crushed = false;
-    
+
     // create the bricks array
     ArrayList<Rectangle> bricks = new ArrayList<>();
-    
+
     // create the coins array
-    ArrayList<Rectangle> coins = new ArrayList<>(); 
-    
+    ArrayList<Rectangle> coins = new ArrayList<>();
+
     // create the coffee array
     ArrayList<Rectangle> coffees = new ArrayList<>();
-    
+
     // keyboard variables
     boolean right = false;
     boolean left = false;
     boolean jump = false;
     boolean prevJump = false;
-    
+
     // for energy bar
     double energy = 210;
     boolean playerMoving = false;
-    
+
     // mouse clicks for changing screens
     int buttonPressed = 0;
-    
+
     //coins collected
     int score = 0;
-    
+
     // player
-     Rectangle player = new Rectangle(500, 200, 40, 40);
+    Rectangle player = new Rectangle(500, 200, 40, 40);
 
     int frameCount = 0;
-    
+
     // import images
     BufferedImage background = loadImage("sky.png");
     BufferedImage brickPic = loadImage("brick3.png");
@@ -81,7 +81,6 @@ public class FinalGame2 extends JComponent implements KeyListener, MouseMotionLi
     BufferedImage title = loadImage("Instructions.png");
     BufferedImage gameOver = loadImage("GAMEOVER.png");
     BufferedImage scoreScreen = loadImage("SCORE.png");
-    
 
     public BufferedImage loadImage(String filename) {
         BufferedImage img = null;
@@ -110,7 +109,7 @@ public class FinalGame2 extends JComponent implements KeyListener, MouseMotionLi
         bricks.add(new Rectangle(400, 600, 40, 20));
         bricks.add(new Rectangle(900, 550, 40, 20));
         bricks.add(new Rectangle(600, 680, 40, 20));
-        
+
         coins = new ArrayList<>();
         coins.add(new Rectangle(220, 370, 15, 15));
         coins.add(new Rectangle(470, 180, 15, 15));
@@ -124,17 +123,18 @@ public class FinalGame2 extends JComponent implements KeyListener, MouseMotionLi
         coins.add(new Rectangle(750, 180, 15, 15));
         coins.add(new Rectangle(100, 600, 15, 15));
         coins.add(new Rectangle(50, 200, 15, 15));
-        
+
         coffees = new ArrayList<>();
         coffees.add(new Rectangle(200, 320, 25, 25));
         coffees.add(new Rectangle(500, 100, 25, 25));
         coffees.add(new Rectangle(900, 550, 25, 25));
-        
-        
+
     }
+
     // drawing of the game happens in here
     // we use the Graphics object, g, to perform the drawing
     // NOTE: This is already double buffered!(helps with framerate/speed)
+
     @Override
     public void paintComponent(Graphics g) {
         // always clear the screen first!
@@ -149,7 +149,7 @@ public class FinalGame2 extends JComponent implements KeyListener, MouseMotionLi
         }
 
         if (buttonPressed == 1) {
-            
+
             //background
             Color lightBlue = new Color(148, 255, 250);
             g.setColor(lightBlue);
@@ -165,37 +165,36 @@ public class FinalGame2 extends JComponent implements KeyListener, MouseMotionLi
             // draw player
             g.setColor(Color.RED);
             g.fillRect(player.x, player.y, player.width, player.height);
-            
 
             //create the bricks
             g.setColor(Color.RED);
             for (Rectangle brick : bricks) {
-                    g.fillRect(brick.x, brick.y, brick.width, brick.height);
-                }
-            
+                g.fillRect(brick.x, brick.y, brick.width, brick.height);
+            }
+
             //create the cions
             g.setColor(Color.YELLOW);
             for (Rectangle coin : coins) {
-                    g.fillRect(coin.x, coin.y, coin.width, coin.height);
-                }
-            
+                g.fillRect(coin.x, coin.y, coin.width, coin.height);
+            }
+
             //create the coffee
             g.setColor(Color.BLACK);
             for (Rectangle coffee : coffees) {
-                    g.fillRect(coffee.x, coffee.y, coffee.width, coffee.height);
-                }
-            
+                g.fillRect(coffee.x, coffee.y, coffee.width, coffee.height);
+            }
+
             // Energy
             g.setFont(new Font("Impact", Font.PLAIN, 20));
             String energyString = "" + energy;
             g.drawString(energyString, 20, 620);
-            
+
             // Create the energy bar
             g.setColor(Color.RED);
             g.fillRect(10, 625, 220, 50);
             g.setColor(Color.GREEN);
             g.fillRect(15, 630, (int) energy, 40);
-            
+
         }
 
         if (buttonPressed == 2) {
@@ -220,14 +219,12 @@ public class FinalGame2 extends JComponent implements KeyListener, MouseMotionLi
 
         // GAME DRAWING ENDS HERE
     }
-    
 
     // The main game loop
     // In here is where all the logic for my game will go
     public void run() {
         // initial things to do before game starts
 
-        
         // END INITIAL THINGS TO DO
         // Used to keep track of time used to draw and update the game
         // This is used to limit the framerate later on
@@ -243,119 +240,114 @@ public class FinalGame2 extends JComponent implements KeyListener, MouseMotionLi
 
             // all your game rules and move is done in here
             // GAME LOGIC STARTS HERE 
-            if(buttonPressed == 1){
-            // move the player left or right 
-            if (left) {
-                moveX = -2;
-                playerMoving = true;
-            } else if (right) {
-                moveX = 2;
-                playerMoving = true;
-            } else {
-                moveX = 0;
-                playerMoving = false;
-            }
-            frameCount++;
+            if (buttonPressed == 1) {
+                // move the player left or right 
+                if (left) {
+                    moveX = -2;
+                    playerMoving = true;
+                } else if (right) {
+                    moveX = 2;
+                    playerMoving = true;
+                } else {
+                    moveX = 0;
+                    playerMoving = false;
+                }
+                frameCount++;
 
-            if (frameCount >= 1) {
-                // gravity pulling player down
-                moveY = moveY + 1;
-                frameCount = 0;
-                // go through all blocks
-            for(Rectangle coin: coins){
-                // gravity pulling the coins down
-                coin.y = 2 + coin.y;
-            }
-            // go through all blocks
-            for(Rectangle brick: bricks){
-            //move the brick
-            brick.y = brick.y + 2;
-            }
-            // go through all blocks
-            for(Rectangle coffee: coffees){
-            //move the brick
-            coffee.y = coffee.y + 2;
-            }
-            }
-            
+                if (frameCount >= 1) {
+                    // gravity pulling player down
+                    moveY = moveY + 1;
+                    frameCount = 0;
+                    // go through all blocks
+                    for (Rectangle coin : coins) {
+                        // gravity pulling the coins down
+                        coin.y = 2 + coin.y;
+                    }
+                    // go through all blocks
+                    for (Rectangle brick : bricks) {
+                        // gravity pulling the bricks down
+                        brick.y = brick.y + 2;
+                    }
+                    // go through all blocks
+                    for (Rectangle coffee : coffees) {
+                        // gravity pulling the coffee down
+                        coffee.y = coffee.y + 2;
+                    }
+                }
 
             //jumping
-            // jump being pressed and not in the air
-            if (jump && !prevJump && !inAir) {
-                // make a big change in y direction
-                moveY = -20;
-                inAir = true;
-                playerMoving = true;
-            }
-            // keeps track of jump key changes
-            prevJump = jump;
+                // jump being pressed and not in the air
+                if (jump && !prevJump && !inAir) {
+                    // make a big change in y direction
+                    moveY = -20;
+                    inAir = true;
+                    playerMoving = true;
+                }
+                // keeps track of jump key changes
+                prevJump = jump;
 
-            // move the player
-            player.x = player.x + moveX;
-            player.y = player.y + moveY;
-            
-            // Energy
-            if(playerMoving){
-            energy = energy -.25;
+                // move the player
+                player.x = player.x + moveX;
+                player.y = player.y + moveY;
+
+                // Energy
+                if (playerMoving) {
+                    energy = energy - .25;
+                }
+
+                // if feet of player become lower than the ground   
+                if (player.y + player.height > 600) {
+                    // stops the falling
+                    player.y = 600 - player.height;
+                    moveY = 0;
+                    inAir = false;
+                }
+
+                // go through all blocks
+                for (Rectangle brick : bricks) {
+                    // is the player hitting a block
+                    if (player.intersects(brick)) {
+                        //  if yes player is hit
+                        crushed = true;
+                    }
+                }
+
+                // go through all blocks
+                for (Rectangle coin : coins) {
+                    // is the player hitting a block
+                    if (player.intersects(coin)) {
+                        // if yes player is hit
+                        score = score + 1;
+                    }
+                }
+
+                // go through all blocks
+                for (Rectangle coffee : coffees) {
+                    // is the player hitting a block
+                    if (player.intersects(coffee)) {
+                        // if yes player is hit
+                        energy = energy + 1;
+                    }
+                }
+
+                // energy cant go past 210
+                if (energy > 210) {
+                    energy = 210;
+                }
+
+                // If no energy game over
+                if (energy == 0) {
+                    buttonPressed = 2;
+                }
+
+                //if a brick hits the player game over
+                if (crushed) {
+                    buttonPressed = 2;
+                }
             }
 
-            // if feet of player become lower than the ground   
-            if (player.y + player.height > 600) {
-                // stops the falling
-                player.y = 600 - player.height;
-                moveY = 0;
-                inAir = false;
-            }
-            
-            // go through all blocks
-            for(Rectangle brick: bricks){
-                // is the player hitting a block
-                if(player.intersects(brick)){
-                    //  if yes player is hit
-                    crushed = true;
-                }
-            }
-            
-            // go through all blocks
-            for(Rectangle coin: coins){
-                // is the player hitting a block
-                if(player.intersects(coin)){
-                    // if yes player is hit
-                    score = score + 1;
-                }
-            }
-            
-            // go through all blocks
-            for(Rectangle coffee: coffees){
-                // is the player hitting a block
-                if(player.intersects(coffee)){
-                    // if yes player is hit
-                    energy = energy + 1;
-                }
-            }
-            
-            if(energy > 210){
-                energy = 210;
-            }
-            
-            // If no energy game over
-            if(energy == 0){
-                buttonPressed = 2;
-            }
-            
-            //if a brick hits the player game over
-            if(crushed){
-                buttonPressed = 2;
-            }
-            }
-            
-            
-            
-            
-            
             // GAME LOGIC ENDS HERE 
             // update the drawing (calls paintComponent)
-            
             repaint();
 
             // SLOWS DOWN THE GAME BASED ON THE FRAMERATE ABOVE
@@ -371,7 +363,6 @@ public class FinalGame2 extends JComponent implements KeyListener, MouseMotionLi
             }
         }
     }
-    
 
     /**
      * @param args the command line arguments
