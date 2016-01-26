@@ -43,14 +43,6 @@ public class FinalGame2 extends JComponent implements KeyListener, MouseMotionLi
     // if the player is hit with a brick
     boolean crushed = false;
 
-    // create the bricks array
-    ArrayList<Rectangle> bricks = new ArrayList<>();
-
-    // create the coins array
-    ArrayList<Rectangle> coins = new ArrayList<>();
-
-    // create the coffee array
-    ArrayList<Rectangle> coffees = new ArrayList<>();
 
     // keyboard variables
     boolean right = false;
@@ -72,6 +64,15 @@ public class FinalGame2 extends JComponent implements KeyListener, MouseMotionLi
     Rectangle player = new Rectangle(500, 200, 40, 40);
 
     int frameCount = 0;
+    
+    // create the bricks array
+    ArrayList<Rectangle> bricks = new ArrayList<>();
+
+    // create the coins array
+    ArrayList<Rectangle> coins = new ArrayList<>();
+
+    // create the coffee array
+    ArrayList<Rectangle> coffees = new ArrayList<>();
 
     // import images
     BufferedImage background = loadImage("sky.png");
@@ -91,6 +92,7 @@ public class FinalGame2 extends JComponent implements KeyListener, MouseMotionLi
         }
         return img;
     }
+    
 
     public FinalGame2() {
         bricks = new ArrayList<>();
@@ -134,16 +136,12 @@ public class FinalGame2 extends JComponent implements KeyListener, MouseMotionLi
     // drawing of the game happens in here
     // we use the Graphics object, g, to perform the drawing
     // NOTE: This is already double buffered!(helps with framerate/speed)
-
     @Override
     public void paintComponent(Graphics g) {
         // always clear the screen first!
         g.clearRect(0, 0, windowWidth, windowHeight);
         // GAME DRAWING GOES HERE 
         if (buttonPressed == 0) {
-            //to see of its working b/c pic not working
-            g.setColor(Color.YELLOW);
-            g.fillRect(0, 0, windowWidth, windowHeight);
             //Instruction screen
             g.drawImage(title, 0, 0, windowWidth, windowHeight, null);
         }
@@ -151,9 +149,6 @@ public class FinalGame2 extends JComponent implements KeyListener, MouseMotionLi
         if (buttonPressed == 1) {
 
             //background
-            Color lightBlue = new Color(148, 255, 250);
-            g.setColor(lightBlue);
-            g.fillRect(0, 0, windowWidth, windowHeight);
             //if pic will work
             g.drawImage(background, 0, 0, windowWidth, windowHeight, null);
 
@@ -172,7 +167,7 @@ public class FinalGame2 extends JComponent implements KeyListener, MouseMotionLi
                 g.fillRect(brick.x, brick.y, brick.width, brick.height);
             }
 
-            //create the cions
+            //create the coins
             g.setColor(Color.YELLOW);
             for (Rectangle coin : coins) {
                 g.fillRect(coin.x, coin.y, coin.width, coin.height);
@@ -197,24 +192,17 @@ public class FinalGame2 extends JComponent implements KeyListener, MouseMotionLi
 
         }
 
-        if (buttonPressed == 2) {
-            //to see of its working b/c pic not working
-            g.setColor(Color.BLUE);
-            g.fillRect(0, 0, windowWidth, windowHeight);
-            //game over screen
+        if (buttonPressed == 2) {//game over screen
             g.drawImage(gameOver, 0, 0, windowWidth, windowHeight, null);
         }
 
         if (buttonPressed == 3) {
-            //to see of its working b/c pic not working
-            g.setColor(Color.GREEN);
-            g.fillRect(0, 0, windowWidth, windowHeight);
             //score screen
             g.drawImage(scoreScreen, 0, 0, windowWidth, windowHeight, null);
             g.setColor(Color.WHITE);
-            g.setFont(new Font("Impact", Font.PLAIN, 30));
+            g.setFont(new Font("Impact", Font.PLAIN, 75));
             String scoreString = "" + score;
-            g.drawString(scoreString, 500, 430);
+            g.drawString(scoreString, 450, 510);
         }
 
         // GAME DRAWING ENDS HERE
@@ -262,20 +250,29 @@ public class FinalGame2 extends JComponent implements KeyListener, MouseMotionLi
                     for (Rectangle coin : coins) {
                         // gravity pulling the coins down
                         coin.y = 2 + coin.y;
+                        if (coin.y > 800) {
+                            coin.y = -100;
+                        }
                     }
                     // go through all blocks
                     for (Rectangle brick : bricks) {
                         // gravity pulling the bricks down
-                        brick.y = brick.y + 2;
+                        brick.y = brick.y + 4;
+                        if (brick.y > 800) {
+                            brick.y = -100;
+                        }
                     }
                     // go through all blocks
                     for (Rectangle coffee : coffees) {
                         // gravity pulling the coffee down
                         coffee.y = coffee.y + 2;
+                        if (coffee.y > 800) {
+                            coffee.y = -100;
+                        }
                     }
                 }
 
-            //jumping
+                //jumping
                 // jump being pressed and not in the air
                 if (jump && !prevJump && !inAir) {
                     // make a big change in y direction
