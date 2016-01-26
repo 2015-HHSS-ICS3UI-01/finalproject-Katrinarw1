@@ -77,8 +77,8 @@ public class FinalGame2 extends JComponent implements KeyListener, MouseMotionLi
     // import images
     BufferedImage background = loadImage("sky.png");
     BufferedImage brickPic = loadImage("brick3.png");
-    BufferedImage coin = loadImage("coin.png");
-    BufferedImage coffeePic = loadImage("coffecup.png");
+    BufferedImage coinPic = loadImage("coin.png");
+    BufferedImage coffeePic = loadImage("coffeecup.png");
     BufferedImage title = loadImage("Instructions.png");
     BufferedImage gameOver = loadImage("GAMEOVER.png");
     BufferedImage scoreScreen = loadImage("SCORE.png");
@@ -164,19 +164,19 @@ public class FinalGame2 extends JComponent implements KeyListener, MouseMotionLi
             //create the bricks
             g.setColor(Color.RED);
             for (Rectangle brick : bricks) {
-                g.fillRect(brick.x, brick.y, brick.width, brick.height);
+                g.drawImage(this.brickPic, brick.x, brick.y, brick.width, brick.height, null);
             }
 
             //create the coins
             g.setColor(Color.YELLOW);
             for (Rectangle coin : coins) {
-                g.fillRect(coin.x, coin.y, coin.width, coin.height);
+                g.drawImage(this.coinPic, coin.x, coin.y, coin.width, coin.height, null);
             }
 
             //create the coffee
             g.setColor(Color.BLACK);
             for (Rectangle coffee : coffees) {
-                g.fillRect(coffee.x, coffee.y, coffee.width, coffee.height);
+                g.drawImage(this.coffeePic, coffee.x, coffee.y, coffee.width, coffee.height, null);
             }
 
             // Energy
@@ -231,10 +231,10 @@ public class FinalGame2 extends JComponent implements KeyListener, MouseMotionLi
             if (buttonPressed == 1) {
                 // move the player left or right 
                 if (left) {
-                    moveX = -2;
+                    moveX = -3;
                     playerMoving = true;
                 } else if (right) {
-                    moveX = 2;
+                    moveX = 3;
                     playerMoving = true;
                 } else {
                     moveX = 0;
@@ -249,7 +249,7 @@ public class FinalGame2 extends JComponent implements KeyListener, MouseMotionLi
                     // go through all blocks
                     for (Rectangle coin : coins) {
                         // gravity pulling the coins down
-                        coin.y = 2 + coin.y;
+                        coin.y = 3 + coin.y;
                         if (coin.y > 800) {
                             coin.y = -100;
                         }
@@ -257,7 +257,7 @@ public class FinalGame2 extends JComponent implements KeyListener, MouseMotionLi
                     // go through all blocks
                     for (Rectangle brick : bricks) {
                         // gravity pulling the bricks down
-                        brick.y = brick.y + 4;
+                        brick.y = brick.y + 6;
                         if (brick.y > 800) {
                             brick.y = -100;
                         }
@@ -265,7 +265,7 @@ public class FinalGame2 extends JComponent implements KeyListener, MouseMotionLi
                     // go through all blocks
                     for (Rectangle coffee : coffees) {
                         // gravity pulling the coffee down
-                        coffee.y = coffee.y + 2;
+                        coffee.y = coffee.y + 3;
                         if (coffee.y > 800) {
                             coffee.y = -100;
                         }
